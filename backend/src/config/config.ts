@@ -1,12 +1,17 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const dotenv = require('dotenv');
+
+dotenv.config({ path: '../../../.env' });
+
 export default () => ({
   port: parseInt(process.env.PORT) || 3000,
   db: {
     type: 'postgres',
-    host: process.env.DATABASE_HOST || 'localhost',
-    port: parseInt(process.env.DATABASE_PORT) || 5432,
-    username: 'student',
-    password: 'student',
-    databaseName: 'kupipodariday',
+    host: process.env.POSTGRES_HOST,
+    port: parseInt(process.env.POSTGRES_PORT),
+    username: process.env.POSTGRES_USER,
+    password: process.env.POSTGRES_PASSWORD,
+    databaseName: process.env.POSTGRES_DB,
   },
-  JWT_SECRET: 'JWT_SECRET',
+  JWT_SECRET: process.env.JWTSECRET,
 });

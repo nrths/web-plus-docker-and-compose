@@ -1,0 +1,52 @@
+version: "3.7"
+services:
+
+  postgres: 
+    container_name: postgres
+    image: "postgres:12"
+    networks:
+      - kpd_internal_network
+    ports:
+     - "5432:5432"
+    volumes:
+     - volume:/var/lib/postgresql/data
+    env_file: .env
+    restart: unless-stopped
+
+  backend:
+    container_name: kpd_backend
+    build: ./backend
+    env_file: .env
+    restart: unless-stopped
+    ports:
+      - "4000:3000"
+    networks:
+      - kpd_internal_network
+      - kpd_common_network
+    links: 
+      - postgres
+    depends_on:
+      - postgres
+
+  frontend:
+    container_name: kpd_frontend
+    build: ./frontend
+    ports:
+      - "8081:80"
+    networks:
+      - kpd_common_network
+    restart: unless-stopped
+    depends_on:
+      - backend
+
+volumes:
+  volume:
+    driver: local
+
+networks:
+  kpd_internal_network: 
+    driver: bridge
+    internal: true
+  kpd_common_network:
+    driver: bridge
+
