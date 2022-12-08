@@ -1,4 +1,4 @@
-export const URL = "http://localhost:3000"; // подставить домен api.
+export const URL = "https://api.kpd.nrths.nomoredomains.club";
 
 export const MINIMUM_PASSWORD_LENGTH = 3;
 export const MINIMUM_USERNAME_LENGTH = 3;
